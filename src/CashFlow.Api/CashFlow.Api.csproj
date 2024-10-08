@@ -21,4 +21,8 @@
     <ProjectReference Include="..\CashFlow.Infrastructure\CashFlow.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ResourceErrorMessage.resx" />
+  </ItemGroup>
+
 </Project>
