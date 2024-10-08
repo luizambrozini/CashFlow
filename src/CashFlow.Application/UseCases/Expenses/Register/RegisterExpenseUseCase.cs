@@ -1,5 +1,6 @@
 ﻿using CashFlow.Comunication.Reponses;
 using CashFlow.Comunication.Requests;
+using CashFlow.Exception.ExceptiosBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Register
 {
@@ -18,7 +19,7 @@ namespace CashFlow.Application.UseCases.Expenses.Register
             if (result.IsValid == false)
             {
                 var errorMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
-                throw new ArgumentException();
+                throw new ErrorOnValidationException(errorMessages);
             }
         }
     }
