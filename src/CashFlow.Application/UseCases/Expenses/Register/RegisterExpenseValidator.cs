@@ -1,5 +1,4 @@
-﻿using CashFlow.Comunication.Enums;
-using CashFlow.Comunication.Requests;
+﻿using CashFlow.Comunication.Requests;
 using CashFlow.Exception;
 using FluentValidation;
 
