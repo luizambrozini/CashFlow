@@ -35,12 +35,15 @@ namespace Validators.Test.Expenses.Register
             result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessage.TITLE_REQUIRED));
         }
 
-        [Fact]
-        public void Error_Amount_Less_Zero()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-7)]
+        public void Error_Amount_Less_Equal_Zero(decimal amount)
         {
             var validator = new RegisterExpenseValidator();
             var request = RequestRegisterExpeseJsonBuilder.Build();
-            request.Amount = -4;
+            request.Amount = amount;
             //Act
             var result = validator.Validate(request);
 
@@ -48,6 +51,8 @@ namespace Validators.Test.Expenses.Register
             result.IsValid.Should().BeFalse();
             result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessage.VALUE_MOST_BE_GRETHER_THAN_ZERO));
         }
+
+
 
         [Fact]
         public void Error_Date_Future()
