@@ -2,11 +2,10 @@
 {
     public class NotFoundException : CashFlowException
     {
-        public string Error { get; set; } = string.Empty;
 
-        public NotFoundException(string errorMessage)
+        public NotFoundException(string errorMessage) : base(errorMessage)
         {
-            Error = errorMessage;
+
         }
     }
 }

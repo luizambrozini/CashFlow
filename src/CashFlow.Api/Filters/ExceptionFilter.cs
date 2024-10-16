@@ -28,9 +28,9 @@ namespace CashFlow.Api.Filters
                 context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 context.Result = new BadRequestObjectResult(response);
             }
-            else if (context.Exception is NotFoundException exNotFound)
+            else if (context.Exception is NotFoundException)
             {
-                var response = new ResponseErrorJson(exNotFound.Error);
+                var response = new ResponseErrorJson(context.Exception.Message);
                 context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
                 context.Result = new NotFoundObjectResult(response);
             }
