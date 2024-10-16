@@ -1,4 +1,4 @@
-﻿using CashFlow.Application.UseCases.Expenses.Register;
+﻿using CashFlow.Application.UseCases.Expenses;
 using CashFlow.Comunication.Enums;
 using CashFlow.Domain.Enums;
 using CashFlow.Exception;
@@ -13,7 +13,7 @@ namespace Validators.Test.Expenses.Register
         public void Success()
         {
             //Arrange
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var request = RequestRegisterExpeseJsonBuilder.Build();
             //Act
             var result = validator.Validate(request);
@@ -28,7 +28,7 @@ namespace Validators.Test.Expenses.Register
         [InlineData(null)]
         public void Error_Title_Empty(string title)
         {
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var request = RequestRegisterExpeseJsonBuilder.Build();
             request.Title = title;
             //Act
@@ -46,7 +46,7 @@ namespace Validators.Test.Expenses.Register
         [InlineData(-7)]
         public void Error_Amount_Less_Equal_Zero(decimal amount)
         {
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var request = RequestRegisterExpeseJsonBuilder.Build();
             request.Amount = amount;
             //Act
@@ -60,7 +60,7 @@ namespace Validators.Test.Expenses.Register
         [Fact]
         public void Error_Date_Future()
         {
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var request = RequestRegisterExpeseJsonBuilder.Build();
             request.Date = DateTime.UtcNow.AddDays(1);
             //Act
@@ -74,9 +74,9 @@ namespace Validators.Test.Expenses.Register
         [Fact]
         public void Error_PaymentType()
         {
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var request = RequestRegisterExpeseJsonBuilder.Build();
-            request.PaymentType = (PaymentType)700;
+            request.PaymentType = (CashFlow.Comunication.Enums.PaymentType)700;
             //Act
             var result = validator.Validate(request);
 

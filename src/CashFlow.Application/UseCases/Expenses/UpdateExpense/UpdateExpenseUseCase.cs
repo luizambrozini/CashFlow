@@ -1,27 +1,45 @@
-﻿using CashFlow.Comunication.Requests;
+﻿using AutoMapper;
+using CashFlow.Comunication.Requests;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Exception;
 using CashFlow.Exception.ExceptiosBase;
 
 namespace CashFlow.Application.UseCases.Expenses.UpdateExpense
 {
     internal class UpdateExpenseUseCase : IUpdateExpenseUseCase
     {
-        private readonly IExpensesWriteOnlyRepository _expensesRepository;
+        private readonly IMapper _mapper;
+        private readonly IExpesnesUpdateOnlyRepository _expensesRepository;
         private readonly IUnitOfwork _unitOfwork;
 
         public UpdateExpenseUseCase(
-            IExpensesWriteOnlyRepository expensesRepository,
+            IMapper mapper,
+            IExpesnesUpdateOnlyRepository expensesRepository,
             IUnitOfwork unitOfwork
             )
         {
+            _mapper = mapper;
             _expensesRepository = expensesRepository;
             _unitOfwork = unitOfwork;
         }
 
         public async Task Execute(int id, RequestExpenseJson request)
         {
+            
+
+            var expense = await _expensesRepository.GetById(id);
+
+            if (expense == null)
+            {
+                throw new NotFoundException(ResourceErrorMessage.EXPENSE_NOT_FOUND);
+            }
+
             Validate(request);
+
+            _mapper.Map(request, expense);
+
+            _expensesRepository.Update(expense);
 
             await _unitOfwork.Commit();
         }
