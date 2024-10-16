@@ -9,9 +9,9 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
 
         public ExpensesRepository(CashFlowDbContext cashFlowDbContext) => _cashFlowDbContext = cashFlowDbContext;
 
-        public void Add(Expense expense)
+        public async Task Add(Expense expense)
         {
-            _cashFlowDbContext.Expenses.Add(expense);
+            await _cashFlowDbContext.Expenses.AddAsync(expense);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace CashFlow.Infrastructure.DataAccess
 
         public UnitOfwork(CashFlowDbContext cashFlowDbContext) => _cashFlowDbContext = cashFlowDbContext;
 
-        public void Commit() => _cashFlowDbContext.SaveChanges();
+        public async Task Commit() => await _cashFlowDbContext.SaveChangesAsync();
     }
 }
