@@ -1,4 +1,5 @@
 ﻿using CashFlow.Application.UseCases.Expenses.Register;
+using CashFlow.Comunication.Reponses;
 using CashFlow.Comunication.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,8 @@ namespace CashFlow.Api.Controllers
     public class ExpensesController : ControllerBase
     {
         [HttpPost]
+        [ProducesResponseType(typeof(ReponseRegisterExpensiveJson), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(
             [FromServices] IRegisterExpenseUseCase registerExpenseUseCase,
             [FromBody] RequestRegisterExpeseJson requestRegisterExpeseJson
