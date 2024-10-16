@@ -2,6 +2,7 @@
 using CashFlow.Application.UseCases.Expenses.GetAll;
 using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
+using CashFlow.Application.UseCases.Expenses.UpdateExpense;
 using CashFlow.Comunication.Reponses;
 using CashFlow.Comunication.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -42,11 +43,26 @@ namespace CashFlow.Api.Controllers
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(
             [FromServices] IRegisterExpenseUseCase registerExpenseUseCase,
-            [FromBody] RequestRegisterExpeseJson requestRegisterExpeseJson
+            [FromBody] RequestExpenseJson request
         )
         {
-            var response = await registerExpenseUseCase.Execute(requestRegisterExpeseJson);
+            var response = await registerExpenseUseCase.Execute(request);
             return Created(string.Empty, response);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateExpense(
+            [FromServices] IUpdateExpenseUseCase updateExpenseUseCase,
+            [FromBody] RequestExpenseJson request,
+            int id
+            )
+        {
+            await updateExpenseUseCase.Execute(id, request);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -60,5 +76,6 @@ namespace CashFlow.Api.Controllers
             await deleteExpenseUseCase.Execute(id);
             return NoContent();
         }
+
     }
 }

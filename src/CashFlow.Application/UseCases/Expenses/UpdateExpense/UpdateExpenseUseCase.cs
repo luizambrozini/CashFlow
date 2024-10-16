@@ -1,40 +1,29 @@
-﻿using AutoMapper;
-using CashFlow.Comunication.Reponses;
-using CashFlow.Comunication.Requests;
-using CashFlow.Domain.Entities;
+﻿using CashFlow.Comunication.Requests;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Exception.ExceptiosBase;
 
-namespace CashFlow.Application.UseCases.Expenses.Register
+namespace CashFlow.Application.UseCases.Expenses.UpdateExpense
 {
-    internal class RegisterExpenseUseCase : IRegisterExpenseUseCase
+    internal class UpdateExpenseUseCase : IUpdateExpenseUseCase
     {
-        private readonly IMapper _mapper;
         private readonly IExpensesWriteOnlyRepository _expensesRepository;
         private readonly IUnitOfwork _unitOfwork;
 
-        public RegisterExpenseUseCase(
-            IMapper mapper,
+        public UpdateExpenseUseCase(
             IExpensesWriteOnlyRepository expensesRepository,
             IUnitOfwork unitOfwork
             )
         {
-            _mapper = mapper;
             _expensesRepository = expensesRepository;
             _unitOfwork = unitOfwork;
         }
 
-        public async Task<ReponseRegisterExpensiveJson> Execute(RequestExpenseJson request)
+        public async Task Execute(int id, RequestExpenseJson request)
         {
             Validate(request);
 
-            var entity = _mapper.Map<Expense>(request);
-
-            await _expensesRepository.Add(entity);
             await _unitOfwork.Commit();
-
-            return _mapper.Map<ReponseRegisterExpensiveJson>(entity);
         }
 
         private void Validate(RequestExpenseJson request)
