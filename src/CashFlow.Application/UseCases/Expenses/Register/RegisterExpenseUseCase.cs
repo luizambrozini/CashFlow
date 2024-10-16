@@ -8,7 +8,7 @@ using CashFlow.Exception.ExceptiosBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Register
 {
-    public class RegisterExpenseUseCase : IRegisterExpenseUseCase
+    internal class RegisterExpenseUseCase : IRegisterExpenseUseCase
     {
         private readonly IMapper _mapper;
         private readonly IExpensesRepository _expensesRepository;
@@ -18,7 +18,7 @@ namespace CashFlow.Application.UseCases.Expenses.Register
             IMapper mapper,
             IExpensesRepository expensesRepository,
             IUnitOfwork unitOfwork
-        )
+            )
         {
             _mapper = mapper;
             _expensesRepository = expensesRepository;
