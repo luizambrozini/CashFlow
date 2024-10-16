@@ -1,12 +1,20 @@
+using System.Net;
+
 namespace CashFlow.Exception.ExceptiosBase
 {
 
     public class ErrorOnValidationException : CashFlowException
     {
-        public List<string> Errors { get; set; } = [];
+        private readonly List<string> _errors;
+        public override int StatusCode => (int)HttpStatusCode.BadRequest;
         public ErrorOnValidationException(List<string> errorMesages) : base(string.Empty)
         {
-            Errors = errorMesages;
+            _errors = errorMesages;
+        }
+
+        public override List<string> GetErrors()
+        {
+            return _errors;
         }
     }
 }
