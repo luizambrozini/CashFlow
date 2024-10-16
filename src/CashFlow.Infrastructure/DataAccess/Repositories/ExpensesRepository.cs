@@ -15,9 +15,9 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
             return await _cashFlowDbContext.Expenses.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Expense> GetById(long id)
+        public async Task<Expense?> GetById(long id)
         {
-            return await _cashFlowDbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id) ?? null!;
+            return await _cashFlowDbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task Add(Expense expense)
