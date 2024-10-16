@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CashFlow.Comunication.Reponses;
-using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
 
 namespace CashFlow.Application.UseCases.Expenses.GetAll
@@ -8,11 +7,11 @@ namespace CashFlow.Application.UseCases.Expenses.GetAll
     internal class GetAllExpensesUseCase : IGetAllExpensesUseCase
     {
         private readonly IMapper _mapper;
-        private readonly IExpensesRepository _expensesRepository;
+        private readonly IExpensesReadOnlyRespository _expensesRepository;
 
         public GetAllExpensesUseCase(
             IMapper mapper,
-            IExpensesRepository expensesRepository
+            IExpensesReadOnlyRespository expensesRepository
             )
         {
             _mapper = mapper;
