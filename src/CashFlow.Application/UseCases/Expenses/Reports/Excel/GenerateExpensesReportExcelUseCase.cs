@@ -31,6 +31,18 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Excel
             var worksheet = workbook.Worksheets.Add($"Report_Expenses_{month.ToString("Y")}");
             AddHeader(worksheet);
 
+            var raw = 2;
+            foreach (var expense in expenses)
+            {
+                worksheet.Cell($"A{raw}").Value = expense.Title;
+                worksheet.Cell($"B{raw}").Value = expense.Description;
+                worksheet.Cell($"C{raw}").Value = expense.Date;
+                worksheet.Cell($"D{raw}").Value = expense.Amount;
+                worksheet.Cell($"E{raw}").Value = (int)expense.PaymentType;
+
+                raw++;
+            }
+
             var file = new MemoryStream();
             workbook.SaveAs(file);
 
@@ -55,5 +67,7 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Excel
             worksheet.Cell("D1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
 
         }
+
+
     }
 }
